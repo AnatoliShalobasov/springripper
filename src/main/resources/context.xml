@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+        Спринг об аннотациях не знает.
+        Обработкой аннотацией занимаються BeanPostProcessor-ы.
+        Есть 3 пути для включия обработки аннотаций:
+        1. <context:annotation-config/> - добавляет xml в котором прописаны все дефолтные BeanPostProcessor-ы.
+        Первый способо подходит для стандартных аннотации, которые есть в спринге, свои же все равно придется прописывать
+        одним из двух способов ниже
+        2. <bean class="part1.quoters.postproxy.PostProxyInvokerContextListener"/>
+        3. <context:component-scan base-package="part1.quoters"/>
+        -->
+    <context:annotation-config/>
+    <bean class="part1.quoters.postproxy.PostProxyInvokerContextListener"/>
+    <bean class="part1.quoters.random.InjectRandomIntBeanPostProcessor"/>
+    <bean class="part1.quoters.profiling.ProfilingHandlerBeanPostProcessor"/>
+    <bean class="part1.quoters.quoter.TerminatorQuoter" id="terminatorQuoter">
+        <property name="message" value="I'll be back!"/>
+    </bean>
+</beans>
